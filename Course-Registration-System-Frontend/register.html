@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Register Page</title>
+</head>
+<body>
+    <h1>Register a course</h1>
+
+    <form action="http://localhost:8080/enrollCourse" method="post">
+
+        <label for="name">Enter your name : </label>
+        <input type="text" name = "name" id = "name">
+        <br><br>
+
+        <label for="emailId">Enter your email Id : </label>
+        <input type="email" name = "emailId" id = "emailId">
+        <br><br>
+
+        <label for="courseName">Select a course : </label><br>
+
+        <select name="courseName" id="courseName">
+            
+        </select>
+        
+        <br><br>
+        <button type="submit">submit</button>
+    </form>
+
+
+    <script>
+        window.onload = function (){
+            showCourseDropDown();
+        }
+
+        function showCourseDropDown(){
+            fetch("http://localhost:8080/getAvailableCourses")
+            .then((response) => response.json())
+            .then( (courseList) => {
+                var courseDropDown = document.getElementById("courseName");
+
+                courseList.forEach(course => {
+                    var option = document.createElement("option");
+
+                    option.value = course.courseName;
+                    option.textContent = course.courseName;
+
+                    courseDropDown.appendChild(option);
+                });
+            })
+        }
+    </script>
+</body>
+</html>

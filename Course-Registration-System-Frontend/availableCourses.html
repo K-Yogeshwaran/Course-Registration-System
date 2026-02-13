@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Available Courses</title>
+</head>
+<body>
+    <h1>Available Courses</h1>
+
+    <table border = "1" align = "center">
+        <tr align="center" style="background-color: aqua;">
+            <th width = "100">Course ID</th>
+            <th width = "150">Course Name</th>
+            <th width = "100">Trainer</th>
+            <th width = "140">Duration In Weeks</th>
+
+            <tbody id="courseTable"></tbody>
+        </tr>
+    </table>
+
+
+    <script>
+        window.onload = function (){
+            showCourses();
+        }
+
+        function showCourses(){
+            fetch("http://localhost:8080/getAvailableCourses")
+            .then( (response) => response.json())
+            .then( (courses) => {
+
+                const dataTable = document.getElementById("courseTable");
+
+                courses.forEach(course => {
+                    var rowData = `<tr>
+                        <td> ${course.courseId}</td>
+                        <td> ${course.courseName}</td>
+                        <td> ${course.trainer} </td>
+                        <td> ${course.durationInWeeks}</td>
+                        </tr>`;
+
+                    dataTable.innerHTML += rowData;
+                });
+            })
+        }
+    </script>
+</body>
+</html>

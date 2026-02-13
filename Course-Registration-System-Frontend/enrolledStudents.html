@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Enrolled Students</title>
+</head>
+<body>
+    <h1>Enrolled Students</h1>
+
+    <table align="center" border="1">
+        <tr align="center" style="background-color: aqua;">
+            <th width = "150">Student Name</th>
+            <th width ="200">Email ID</th>
+            <th width = "150">Course Name</th>
+        </tr>
+
+        <tbody id="enrolledStudentsTable"></tbody>
+    </table>
+
+
+
+    <script>
+        window.onload = function (){
+            showEnrolledStudents();
+        }
+
+        function showEnrolledStudents(){
+            fetch("http://localhost:8080/getEnrolledStudents")
+            .then( (response) => response.json())
+            .then((studentList) => {
+                const tableData = document.getElementById("enrolledStudentsTable");
+
+                studentList.forEach(student => {
+                    var rowData = `<tr>
+                        <td>${student.name}</td>
+                        <td>${student.emailId}</td>
+                        <td>${student.courseName}</td>
+                        </tr>`;
+
+                    tableData.innerHTML += rowData;
+                });
+            })
+        }
+    </script>
+</body>
+</html>
